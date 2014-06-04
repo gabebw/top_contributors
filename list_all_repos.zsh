@@ -21,7 +21,9 @@ function query_api {
 }
 
 function all_public_repos_in_organization {
-  query_api "orgs/${ORG}/repos?type=all" | jq --raw-output '.[].name'
+  # Some repos are under the user and some are under the org.
+  query_api "users/${ORG}/repos" | jq --raw-output '.[].name'
+  query_api "orgs/${ORG}/repos" | jq --raw-output '.[].name'
 }
 
-all_public_repos_in_organization
+all_public_repos_in_organization | sort | uniq
