@@ -7,8 +7,9 @@ TOKEN="$2"
 
 GIT_NAME=$(git config user.name)
 
-for repo_name in $(./list_all_repos.zsh "$ORGANIZATION" "$TOKEN")
+for repo_name in $(./list_all_public_repos.zsh "$ORGANIZATION" "$TOKEN")
 do
+  echo $repo_name
   if git clone "https://github.com/${ORGANIZATION}/${repo_name}.git"
   then
     cd "$repo_name" &> /dev/null

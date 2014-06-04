@@ -23,7 +23,7 @@ function query_api {
 function all_public_repos_in_organization {
   # Some repos are under the user and some are under the org.
   query_api "users/${ORG}/repos" | jq --raw-output '.[].name'
-  query_api "orgs/${ORG}/repos" | jq --raw-output '.[].name'
+  query_api "orgs/${ORG}/repos?type=public" | jq --raw-output '.[].name'
 }
 
 all_public_repos_in_organization | sort | uniq
