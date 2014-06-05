@@ -28,12 +28,7 @@ function rank_for {
   cd "$TOPLEVEL_DIR/repos"
   clone_and_cd_into "$repo_name"
 
-  rank=$(git shortlog -ns | nl | ag "^\W+[0-9]+\W+[0-9]+\t${GIT_NAME}$" | cut -f1 | xargs echo)
-
-  if [[ -n "$rank" ]]
-  then
-    echo "$repo_name: #${rank}"
-  fi
+  git shortlog -ns | nl | ag "^\W+[0-9]+\W+[0-9]+\t${GIT_NAME}$" | cut -f1 | xargs echo
 }
 
 for repo_name in $(./list_all_public_repos.zsh "$ORGANIZATION" "$TOKEN")
