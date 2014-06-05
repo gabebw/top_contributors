@@ -10,10 +10,7 @@ TOPLEVEL_DIR=$(pwd)
 
 mkdir -p repos
 
-for repo_name in $(./list_all_public_repos.zsh "$ORGANIZATION" "$TOKEN")
-do
-  cd "$TOPLEVEL_DIR/repos"
-
+function clone_and_cd_into {
   if [[ -d "$repo_name" ]]; then
     cd "$repo_name"
     git checkout master &>/dev/null
@@ -23,7 +20,25 @@ do
   fi
 
   cd "$repo_name" &> /dev/null
+}
+
+function rank_for {
+  local repo_name="$1"
+
+  cd "$TOPLEVEL_DIR/repos"
+  clone_and_cd_into "$repo_name"
+
   rank=$(git shortlog -ns | nl | ag "^\W+[0-9]+\W+[0-9]+\t${GIT_NAME}$" | cut -f1 | xargs echo)
+
+  if [[ -n "$rank" ]]
+  then
+    echo "$repo_name: #${rank}"
+  fi
+}
+
+for repo_name in $(./list_all_public_repos.zsh "$ORGANIZATION" "$TOKEN")
+do
+  rank=$(rank_for "$repo_name")
 
   if [[ -n "$rank" ]]
   then
