@@ -31,6 +31,9 @@ function rank_for {
   git shortlog -ns | nl | ag "^\W+[0-9]+\W+[0-9]+\t${GIT_NAME}$" | cut -f1 | xargs echo
 }
 
+repos_with_rank=0
+number_of_repos=0
+
 for repo_name in $(./list_all_public_repos.zsh "$ORGANIZATION" "$TOKEN")
 do
   rank=$(rank_for "$repo_name")
@@ -38,7 +41,13 @@ do
   if [[ -n "$rank" ]]
   then
     echo "$repo_name: #${rank}"
+    repos_with_rank=$(($repos_with_rank + 1))
   else
     echo "$repo_name: No contributions"
   fi
+
+  number_of_repos=$(($number_of_repos + 1))
 done
+
+percentage_contributed_to=$(bc <<<"scale=0; ($repos_with_rank * 100) / $number_of_repos")
+echo "You contributed to ${percentage_contributed_to}% of organization repos"
