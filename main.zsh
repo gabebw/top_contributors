@@ -30,7 +30,12 @@ function rank_for {
 
   cd "$TOPLEVEL_DIR/repos/$repo_name" &> /dev/null
 
-  git shortlog -ns | nl | ag "^\W+[0-9]+\W+[0-9]+\t${GIT_NAME}$" | cut -f1 | xargs echo
+  if git log -1 -q &>/dev/null; then
+    git shortlog -ns | nl | ag "^\W+[0-9]+\W+[0-9]+\t${GIT_NAME}$" | cut -f1 | xargs echo
+  else
+    # Repo has no commits
+    echo ""
+  fi
 }
 
 # Cast repos to an array (ZSH-only)
