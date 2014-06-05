@@ -1,11 +1,7 @@
 #!/bin/zsh
 
-# Usage: ./list_all_repos.zsh ORGANIZATION_NAME personal_access_token
-# Get a token here: https://github.com/settings/applications
-
-
 ORG="$1"
-token="$2"
+TOKEN="$2"
 
 USER_AGENT="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.152 Safari/537.36"
 
@@ -13,7 +9,7 @@ function query_api {
   local url_path="$1"
 
   curl \
-    -u "${token}:x-oauth-basic" \
+    -u "${TOKEN}:x-oauth-basic" \
     -H 'Accept: application/vnd.github.v3+json' \
     -H "User-Agent: ${USER_AGENT}" \
     "https://api.github.com/${url_path}" \
