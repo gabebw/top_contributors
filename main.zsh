@@ -13,7 +13,9 @@ TOPLEVEL_DIR=$(pwd)
 
 mkdir -p repos
 
-function clone_and_cd_into {
+function clone_or_update_repo {
+  cd "$TOPLEVEL_DIR/repos"
+
   if [[ -d "$repo_name" ]]; then
     cd "$repo_name"
     git checkout master &>/dev/null
@@ -21,21 +23,27 @@ function clone_and_cd_into {
   else
     git clone "https://github.com/${ORGANIZATION}/${repo_name}.git"
   fi
-
-  cd "$TOPLEVEL_DIR/repos/$repo_name" &> /dev/null
 }
 
 function rank_for {
   local repo_name="$1"
 
-  clone_and_cd_into "$repo_name"
+  cd "$TOPLEVEL_DIR/repos/$repo_name" &> /dev/null
 
   git shortlog -ns | nl | ag "^\W+[0-9]+\W+[0-9]+\t${GIT_NAME}$" | cut -f1 | xargs echo
 }
 
+echo "Cloning and updating repos..."
+for repo_name in $(./list_all_public_repos.zsh "$ORGANIZATION" "$TOKEN")
+do
+  clone_or_update_repo "$repo_name"
+done
+echo "Done updatng repos."
+
 repos_with_rank=0
 number_of_repos=0
 
+cd "$TOPLEVEL_DIR"
 for repo_name in $(./list_all_public_repos.zsh "$ORGANIZATION" "$TOKEN")
 do
   rank=$(rank_for "$repo_name")
