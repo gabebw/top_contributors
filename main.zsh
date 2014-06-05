@@ -56,6 +56,7 @@ repos_with_rank=0
 number_of_repos=0
 
 cd "$TOPLEVEL_DIR"
+
 for repo_name in $repos
 do
   rank=$(rank_for "$repo_name")
