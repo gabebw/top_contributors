@@ -33,18 +33,21 @@ function rank_for {
   git shortlog -ns | nl | ag "^\W+[0-9]+\W+[0-9]+\t${GIT_NAME}$" | cut -f1 | xargs echo
 }
 
+# Cast repos to an array (ZSH-only)
+repos=( "${(@f)$(./list_all_public_repos.zsh $ORGANIZATION $TOKEN)}" )
+
 echo "Cloning and updating repos..."
-for repo_name in $(./list_all_public_repos.zsh "$ORGANIZATION" "$TOKEN")
+for repo_name in $repos
 do
   clone_or_update_repo "$repo_name"
 done
-echo "Done updatng repos."
+echo "Done updating repos."
 
 repos_with_rank=0
 number_of_repos=0
 
 cd "$TOPLEVEL_DIR"
-for repo_name in $(./list_all_public_repos.zsh "$ORGANIZATION" "$TOKEN")
+for repo_name in $repos
 do
   rank=$(rank_for "$repo_name")
 
