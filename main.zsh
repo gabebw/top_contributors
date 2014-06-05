@@ -34,6 +34,10 @@ function rank_for {
 }
 
 # Cast repos to an array (ZSH-only)
+# @f = Split the result of the expansion at newlines.
+# Docs: http://zsh.sourceforge.net/Doc/Release/Expansion.html#Parameter-Expansion-Flags
+#
+# The parentheses around the RHS cast to an array.
 repos=( "${(@f)$(./list_all_public_repos.zsh $ORGANIZATION $TOKEN)}" )
 
 echo "Cloning and updating repos..."
