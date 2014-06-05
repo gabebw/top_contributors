@@ -1,9 +1,13 @@
 #!/bin/zsh
 
-# Usage: ./main.zsh ORGANIZATION_NAME TOKEN
 
 ORGANIZATION="$1"
 TOKEN="$2"
+
+if [[ $# != 2 ]]; then
+  echo "Usage: ./main.zsh ORGANIZATION_NAME TOKEN"
+  exit 1
+fi
 
 GIT_NAME=$(git config user.name)
 TOPLEVEL_DIR=$(pwd)
