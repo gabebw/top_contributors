@@ -7,7 +7,7 @@ Find out where you rank for a given organization's open source repos.
 First, get a [personal access token](https://github.com/settings/tokens/new)
 with default scopes. Name it, hit "Generate Token", and copy it down.
 
-Then, install [jq](http://stedolan.github.io/jq). `brew install jq` will work.
+Then install Octokit: `gem install octokit`.
 
 ## Run it
 
