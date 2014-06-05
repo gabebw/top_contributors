@@ -38,8 +38,7 @@ for repo_name in $(./list_all_public_repos.zsh "$ORGANIZATION" "$TOKEN")
 do
   rank=$(rank_for "$repo_name")
 
-  if [[ -n "$rank" ]]
-  then
+  if [[ -n "$rank" ]]; then
     echo "$repo_name: #${rank}"
     repos_with_rank=$(($repos_with_rank + 1))
   else
