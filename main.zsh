@@ -54,6 +54,7 @@ echo "Done updating repos."
 
 repos_with_rank=0
 number_of_repos=0
+printing_dots=false
 
 cd "$TOPLEVEL_DIR"
 
@@ -62,14 +63,24 @@ do
   rank=$(rank_for "$repo_name")
 
   if [[ -n "$rank" ]]; then
+    if $printing_dots; then
+      printing_dots=false
+      echo
+    fi
+
     echo "$repo_name: #${rank}"
     repos_with_rank=$(($repos_with_rank + 1))
   else
-    echo "$repo_name: No contributions"
+    echo -n '.'
+    printing_dots=true
   fi
 
   number_of_repos=$(($number_of_repos + 1))
 done
+
+if $printing_dots; then
+  echo
+fi
 
 percentage_contributed_to=$(bc <<<"scale=0; ($repos_with_rank * 100) / $number_of_repos")
 echo "You contributed to ${percentage_contributed_to}% of organization repos"
