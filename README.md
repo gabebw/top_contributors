@@ -9,5 +9,5 @@ Now run the program:
 
     ./main.zsh ORGANIZATION_NAME TOKEN
 
-It will clone down a lot of repos, but it shouldn't take more than maybe 10
-seconds to start outputting results.
+It will clone down a lot of repos, but it shouldn't take more than a few seconds
+to start outputting results.
