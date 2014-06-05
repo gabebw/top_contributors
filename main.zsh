@@ -83,4 +83,4 @@ if $printing_dots; then
 fi
 
 percentage_contributed_to=$(bc <<<"scale=0; ($repos_with_rank * 100) / $number_of_repos")
-echo "You contributed to ${percentage_contributed_to}% of public ${ORGANIZATION} repos"
+echo "You have contributed to ${percentage_contributed_to}% of public ${ORGANIZATION} repos"
