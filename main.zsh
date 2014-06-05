@@ -1,6 +1,5 @@
 #!/bin/zsh
 
-
 ORGANIZATION="$1"
 TOKEN="$2"
 
@@ -23,13 +22,12 @@ function clone_and_cd_into {
     git clone "https://github.com/${ORGANIZATION}/${repo_name}.git"
   fi
 
-  cd "$repo_name" &> /dev/null
+  cd "$TOPLEVEL_DIR/repos/$repo_name" &> /dev/null
 }
 
 function rank_for {
   local repo_name="$1"
 
-  cd "$TOPLEVEL_DIR/repos"
   clone_and_cd_into "$repo_name"
 
   git shortlog -ns | nl | ag "^\W+[0-9]+\W+[0-9]+\t${GIT_NAME}$" | cut -f1 | xargs echo
