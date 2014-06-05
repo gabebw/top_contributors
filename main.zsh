@@ -43,5 +43,7 @@ do
   if [[ -n "$rank" ]]
   then
     echo "$repo_name: #${rank}"
+  else
+    echo "$repo_name: No contributions"
   fi
 done
