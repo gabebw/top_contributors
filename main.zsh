@@ -8,9 +8,12 @@ TOKEN="$2"
 GIT_NAME=$(git config user.name)
 TOPLEVEL_DIR=$(pwd)
 
+mkdir -p repos
+
 for repo_name in $(./list_all_public_repos.zsh "$ORGANIZATION" "$TOKEN")
 do
-  cd "$TOPLEVEL_DIR"
+  cd "$TOPLEVEL_DIR/repos"
+
   if [[ -d "$repo_name" ]]; then
     cd "$repo_name"
     git checkout master &>/dev/null
