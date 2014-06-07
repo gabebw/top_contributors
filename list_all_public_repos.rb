@@ -18,4 +18,9 @@ client = Octokit::Client.new(
   password: 'x-oauth-basic'
 )
 
-puts client.repositories(ORGANIZATION).map { |repo| repo[:name] }
+begin
+  puts client.repositories(ORGANIZATION).map { |repo| repo[:name] }
+rescue Octokit::Unauthorized
+  STDERR.puts "Bad credentials - is your GitHub token valid?"
+  exit 1
+end
