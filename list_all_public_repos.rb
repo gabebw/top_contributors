@@ -1,6 +1,11 @@
 #!/usr/bin/env ruby
 
-require 'octokit'
+begin
+  require 'octokit'
+rescue LoadError
+  STDERR.puts "!! Error: octokit is not installed, do `gem install octokit`"
+  exit 1
+end
 
 ORGANIZATION = ARGV[0]
 TOKEN = ARGV[1]
