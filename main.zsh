@@ -45,6 +45,12 @@ function rank_for {
 # The parentheses around the RHS cast to an array.
 repos=( "${(@f)$(./list_all_public_repos.rb $ORGANIZATION $TOKEN)}" )
 
+if [[ $? != 0 ]]; then
+  echo
+  echo "!! Couldn't get names of repos, exiting."
+  exit 1
+fi
+
 echo "Cloning and updating repos..."
 for repo_name in $repos
 do
